@@ -16,7 +16,7 @@ public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private long id;
+	private Long id;
 
 	@Column(name = "content", nullable = false)
 	private String content;
@@ -25,7 +25,7 @@ public class Notification {
 	private User recipientId;
 
 	@Column(name = "read")
-	private boolean read;
+	private Boolean read;
 
 	@Column(name = "created_at")
 	private Date createdAt;
