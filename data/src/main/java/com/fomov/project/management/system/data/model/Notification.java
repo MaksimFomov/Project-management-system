@@ -22,7 +22,7 @@ public class Notification {
 	private String content;
 
 	@ManyToOne
-	private User recipientId;
+	private User recipient;
 
 	@Column(name = "read")
 	private Boolean read;

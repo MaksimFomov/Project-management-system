@@ -2,7 +2,6 @@ package com.fomov.project.management.system.data.model;
 
 import com.fomov.project.management.system.data.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

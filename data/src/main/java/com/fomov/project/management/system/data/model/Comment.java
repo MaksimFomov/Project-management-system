@@ -22,7 +22,7 @@ public class Comment {
 	private String content;
 
 	@ManyToOne
-	private Task taskId;
+	private Task task;
 
 	@ManyToOne
 	private User authorId;

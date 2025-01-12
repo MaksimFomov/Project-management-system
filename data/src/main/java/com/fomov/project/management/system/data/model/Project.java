@@ -2,13 +2,12 @@ package com.fomov.project.management.system.data.model;
 
 import com.fomov.project.management.system.data.enums.ProjectStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -31,7 +30,7 @@ public class Project {
 	private User ownerId;
 
 	@ManyToMany
-	private List<User> team;
+	private Set<User> team;
 
 	@Column(name = "status", nullable = false)
 	private ProjectStatus status;
