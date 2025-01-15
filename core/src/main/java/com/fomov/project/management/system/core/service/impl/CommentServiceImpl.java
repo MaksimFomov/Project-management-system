@@ -34,10 +34,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<Comment> getAllTaskCommentsById(long taskId) {
-		return commentRepository.findByTask(
-				taskRepository.findById(taskId)
-						.orElseThrow()
-		);
+		return taskRepository.findById(taskId)
+				.orElseThrow()
+				.getComments();
 	}
 
 	@Transactional
