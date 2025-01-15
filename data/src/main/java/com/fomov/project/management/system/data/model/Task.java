@@ -3,16 +3,16 @@ package com.fomov.project.management.system.data.model;
 import com.fomov.project.management.system.data.enums.TaskPriority;
 import com.fomov.project.management.system.data.enums.TaskStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "tasks")
 public class Task {
 	@Id
@@ -23,21 +23,25 @@ public class Task {
 	@Column(name = "title", length = 20, nullable = false)
 	private String title;
 
-	@Column(name = "description", length = 100, nullable = false)
+	@Column(name = "description", length = 100)
 	private String description;
 
 	@Column(name = "status", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private TaskStatus status;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "assigned_to")
 	private User assignedTo;
 
 	@Column(name = "priority", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private TaskPriority priority;
 
-	@ManyToOne
-	private Project projectId;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "task_id")
+	private List<Comment> comments = new ArrayList<>();
 
 	@Column(name = "due_date")
-	private Date dueDate;
+	private LocalDateTime dueDate;
 }

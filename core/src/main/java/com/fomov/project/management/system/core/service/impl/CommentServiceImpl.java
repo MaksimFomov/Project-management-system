@@ -2,6 +2,7 @@ package com.fomov.project.management.system.core.service.impl;
 
 import com.fomov.project.management.system.core.service.CommentService;
 import com.fomov.project.management.system.data.model.Comment;
+import com.fomov.project.management.system.data.model.Task;
 import com.fomov.project.management.system.data.repository.CommentRepository;
 import com.fomov.project.management.system.data.repository.TaskRepository;
 import jakarta.transaction.Transactional;
@@ -22,12 +23,13 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	@Override
 	public Comment addCommentToTaskById(long taskId, Comment comment) {
-		comment.setTask(
-				taskRepository.findById(taskId)
-						.orElseThrow()
-		);
+		Task existTask = taskRepository.findById(taskId)
+				.orElseThrow();
 
-		return commentRepository.save(comment);
+		existTask.getComments().add(comment);
+		taskRepository.save(existTask);
+
+		return comment;
 	}
 
 	@Override

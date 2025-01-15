@@ -1,16 +1,14 @@
 package com.fomov.project.management.system.data.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "notifications")
 public class Notification {
 	@Id
@@ -21,12 +19,19 @@ public class Notification {
 	@Column(name = "content", nullable = false)
 	private String content;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "recipient_id", nullable = false)
 	private User recipient;
 
-	@Column(name = "read")
+	@Column(name = "read", nullable = false)
 	private Boolean read;
 
-	@Column(name = "created_at")
-	private Date createdAt;
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = LocalDateTime.now();
+		this.read = false;
+	}
 }
