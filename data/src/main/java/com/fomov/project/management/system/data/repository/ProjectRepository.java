@@ -2,8 +2,14 @@ package com.fomov.project.management.system.data.repository;
 
 import com.fomov.project.management.system.data.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
+	@Query("SELECT p FROM Project p JOIN p.team u WHERE u.id = :userId")
+	List<Project> findAllProjectsByUserId(@Param("userId") Long userId);
 }

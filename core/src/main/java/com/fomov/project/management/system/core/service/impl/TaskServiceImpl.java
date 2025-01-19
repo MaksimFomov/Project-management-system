@@ -1,53 +1,61 @@
 package com.fomov.project.management.system.core.service.impl;
 
+import com.fomov.project.management.system.core.exception.notfound.TaskNotFoundException;
+import com.fomov.project.management.system.core.service.ProjectService;
 import com.fomov.project.management.system.core.service.TaskService;
+import com.fomov.project.management.system.core.service.UserService;
 import com.fomov.project.management.system.data.enums.TaskStatus;
+import com.fomov.project.management.system.data.model.Project;
 import com.fomov.project.management.system.data.model.Task;
 import com.fomov.project.management.system.data.model.User;
+import com.fomov.project.management.system.data.repository.ProjectRepository;
 import com.fomov.project.management.system.data.repository.TaskRepository;
-import com.fomov.project.management.system.data.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 	private final TaskRepository taskRepository;
-	private final UserRepository userRepository;
-
-	public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
-		this.taskRepository = taskRepository;
-		this.userRepository = userRepository;
-	}
+	private final ProjectRepository projectRepository;
+	private final UserService userService;
+	private final ProjectService projectService;
 
 	@Transactional
 	@Override
-	public Task createTask(Task newTask) {
-		return taskRepository.save(newTask);
+	public Task createTaskInProjectById(long projectId, Task newTask) {
+		Project existProject = projectService.getProjectById(projectId);
+
+		existProject.getTasks().add(newTask);
+
+		projectRepository.save(existProject);
+
+		return newTask;
 	}
 
-	//доработать
 	@Override
-	public List<Task> getAllProjectTasks() {
-		return null;
+	public List<Task> getAllProjectTasksById(long projectId) {
+		return projectService.getProjectById(projectId).getTasks();
 	}
 
 	@Override
 	public Task getTaskById(long taskId) {
 		return taskRepository.findById(taskId)
-				.orElseThrow();
+				.orElseThrow(() -> new TaskNotFoundException("Task not found with ID: " + taskId));
 	}
 
-	//доработать
 	@Transactional
 	@Override
 	public Task updateTaskById(long taskId, Task updatedTask) {
-		Task existTask = taskRepository.findById(taskId)
-				.orElseThrow();
+		Task existTask = getTaskById(taskId);
 
 		existTask.setTitle(updatedTask.getTitle());
 		existTask.setDescription(updatedTask.getDescription());
+		existTask.setStatus(updatedTask.getStatus());
+		existTask.setPriority(updatedTask.getPriority());
 
 		return taskRepository.save(existTask);
 	}
@@ -55,19 +63,14 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional
 	@Override
 	public void deleteTaskById(long taskId) {
-		taskRepository.delete(
-				taskRepository.findById(taskId)
-						.orElseThrow()
-		);
+		taskRepository.delete(getTaskById(taskId));
 	}
 
 	@Transactional
 	@Override
 	public void assignTaskToUserById(long taskId, long userId) {
-		Task existTask = taskRepository.findById(taskId)
-				.orElseThrow();
-		User existUser = userRepository.findById(userId)
-				.orElseThrow();
+		Task existTask = getTaskById(taskId);
+		User existUser = userService.getUserById(userId);
 
 		existTask.setAssignedTo(existUser);
 
@@ -77,8 +80,7 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional
 	@Override
 	public void changeTaskStatusById(long taskId, TaskStatus newTaskStatus) {
-		Task existTask = taskRepository.findById(taskId)
-				.orElseThrow();
+		Task existTask = getTaskById(taskId);
 
 		existTask.setStatus(newTaskStatus);
 

@@ -6,9 +6,9 @@ import com.fomov.project.management.system.data.model.Task;
 import java.util.List;
 
 public interface TaskService {
-	Task createTask(Task newTask);
+	Task createTaskInProjectById(long projectId, Task newTask);
 
-	List<Task> getAllProjectTasks();
+	List<Task> getAllProjectTasksById(long projectId);
 
 	Task getTaskById(long taskId);
 

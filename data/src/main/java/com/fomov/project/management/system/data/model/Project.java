@@ -2,7 +2,9 @@ package com.fomov.project.management.system.data.model;
 
 import com.fomov.project.management.system.data.enums.ProjectStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.*;

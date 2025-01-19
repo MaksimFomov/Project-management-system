@@ -3,7 +3,9 @@ package com.fomov.project.management.system.data.model;
 import com.fomov.project.management.system.data.enums.TaskPriority;
 import com.fomov.project.management.system.data.enums.TaskStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

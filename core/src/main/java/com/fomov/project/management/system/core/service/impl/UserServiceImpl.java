@@ -1,20 +1,19 @@
 package com.fomov.project.management.system.core.service.impl;
 
+import com.fomov.project.management.system.core.exception.notfound.UserNotFoundException;
 import com.fomov.project.management.system.core.service.UserService;
 import com.fomov.project.management.system.data.model.User;
 import com.fomov.project.management.system.data.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
-
-	public UserServiceImpl(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 
 	@Override
 	public List<User> getAllUsers() {
@@ -24,19 +23,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserById(long userId) {
 		return userRepository.findById(userId)
-				.orElseThrow();
+				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
 	}
 
-	//доработать
 	@Transactional
 	@Override
 	public User updateUserById(long userId, User updatedUser) {
-		User existingUser = userRepository.findById(userId)
-				.orElseThrow();
+		User existingUser = getUserById(userId);
 
 		existingUser.setUsername(updatedUser.getUsername());
 		existingUser.setPassword(updatedUser.getPassword());
-		existingUser.setRole(updatedUser.getRole());
 		existingUser.setEmail(updatedUser.getEmail());
 
 		return userRepository.save(existingUser);
@@ -45,9 +41,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public void deleteUserById(long userId) {
-		userRepository.delete(
-				userRepository.findById(userId)
-						.orElseThrow()
-		);
+		userRepository.delete(getUserById(userId));
 	}
 }
