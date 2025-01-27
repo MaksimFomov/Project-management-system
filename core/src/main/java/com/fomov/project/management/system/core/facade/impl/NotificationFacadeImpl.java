@@ -19,7 +19,7 @@ public class NotificationFacadeImpl implements NotificationFacade {
 	@Override
 	public List<NotificationResponseDTO> getAllUserNotificationsById(long userId) {
 		return notificationResponseMapper.toNotificationResponseDTOs(
-				notificationService.getAllUserNotificationById(userId)
+				notificationService.getAllUserNotificationsById(userId)
 		);
 	}
 
