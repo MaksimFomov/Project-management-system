@@ -18,8 +18,7 @@ public interface ProjectFacade {
 
 	void deleteProjectById(long projectId);
 
-	//Check
 	void addMembersToProjectById(long projectId, Set<UserRequestDTO> memberDTOs);
 
-	void deleteMembersFromProjectById(long projectId, Set<UserRequestDTO> memberDTOs);
+	void removeMembersFromProjectById(long projectId, Set<UserRequestDTO> memberDTOs);
 }

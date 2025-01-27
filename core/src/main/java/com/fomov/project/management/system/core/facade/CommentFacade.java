@@ -2,7 +2,6 @@ package com.fomov.project.management.system.core.facade;
 
 import com.fomov.project.management.system.core.dto.comment.CommentRequestDTO;
 import com.fomov.project.management.system.core.dto.comment.CommentResponseDTO;
-import com.fomov.project.management.system.data.model.Comment;
 
 import java.util.List;
 

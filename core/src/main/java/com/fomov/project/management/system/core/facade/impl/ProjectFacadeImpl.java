@@ -70,8 +70,8 @@ public class ProjectFacadeImpl implements ProjectFacade {
 	}
 
 	@Override
-	public void deleteMembersFromProjectById(long projectId, Set<UserRequestDTO> memberDTOs) {
-		projectService.deleteMembersFromProjectById(
+	public void removeMembersFromProjectById(long projectId, Set<UserRequestDTO> memberDTOs) {
+		projectService.removeMembersFromProjectById(
 				projectId, userRequestMapper.toUserModels(memberDTOs)
 		);
 	}

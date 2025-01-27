@@ -19,5 +19,5 @@ public interface ProjectService {
 
 	void addMembersToProjectById(long projectId, Set<User> members);
 
-	void deleteMembersFromProjectById(long projectId, Set<User> members);
+	void removeMembersFromProjectById(long projectId, Set<User> members);
 }

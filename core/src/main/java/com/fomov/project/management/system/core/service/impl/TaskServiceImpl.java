@@ -28,7 +28,6 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Task createTaskInProjectById(long projectId, Task newTask) {
 		Project existProject = projectService.getProjectById(projectId);
-
 		existProject.getTasks().add(newTask);
 
 		projectRepository.save(existProject);

@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Transactional
 	@Override
-	public void deleteMembersFromProjectById(long projectId, Set<User> members) {
+	public void removeMembersFromProjectById(long projectId, Set<User> members) {
 		Project existingProject = getProjectById(projectId);
 
 		if (members == null || members.isEmpty()) {

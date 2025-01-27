@@ -5,7 +5,7 @@ import com.fomov.project.management.system.data.model.Notification;
 import java.util.List;
 
 public interface NotificationService {
-	List<Notification> getAllUserNotificationById(long userId);
+	List<Notification> getAllUserNotificationsById(long userId);
 
 	void markNotificationAsReadById(long notificationId);
 }

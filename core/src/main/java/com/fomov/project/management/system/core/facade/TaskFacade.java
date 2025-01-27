@@ -3,7 +3,6 @@ package com.fomov.project.management.system.core.facade;
 import com.fomov.project.management.system.core.dto.task.TaskRequestDTO;
 import com.fomov.project.management.system.core.dto.task.TaskResponseDTO;
 import com.fomov.project.management.system.data.enums.TaskStatus;
-import com.fomov.project.management.system.data.model.Task;
 
 import java.util.List;
 
